@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Create Invoice</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="home.html" class="navbar-brand">Shakthi App</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="home.html">Home</a></li>
+        <!-- <li><a href="create.html">Create Invoice</a></li> -->
+        <li><a href="display.html">Invoice Data</a></li>
+        <!-- <li><a>Driver Details</a></li> -->
+        <li><a href="index.html" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>Create Invoice</h2>
+    <!-- Your invoice form goes here -->
+  </div>
+
+  <script>
+    if (!localStorage.getItem('loggedIn')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+
+</html>
