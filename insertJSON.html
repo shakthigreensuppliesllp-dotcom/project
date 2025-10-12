@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Insert Data into JSON</title>
+    <title>Insert Data into JSON</title>
 </head>
+
 <body>
-  <h2>Enter User Info</h2>
-  <form id="dataForm">
-    <input type="text" name="name" placeholder="Name" required />
-    <input type="email" name="email" placeholder="Email" required />
-    <button type="submit">Submit</button>
-  </form>
+    <h2>Enter User Info</h2>
+    <form id="dataForm">
+        <label>Bill No.:</label>
+        <input type="text" id="billNo" value="WGL/SGSL/A-0338" required>
 
-  <script>
-    document.getElementById('dataForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const data = {
-        name: formData.get('name'),
-        email: formData.get('email')
-      };
+        <label>Bill Date:</label>
+        <input type="text" id="billDate" placeholder="DD/MM/YYYY" required>
 
-      fetch('/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(res => res.text())
-      .then(msg => alert(msg))
-      .catch(err => alert('Error: ' + err));
-    });
-  </script>
+        <div class="form-group">
+            <label for="modeOfTransport">Mode Of Transport:</label>
+            <input list="transportOptions" id="modeOfTransport" class="form-control"
+                placeholder="Select Mode Of Transport" value="">
+            <datalist id="transportOptions">
+                <option value="TRACTOR & TROLLEY">
+                <option value="TRUCK (TIPPER)">
+            </datalist>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email')
+            };
+
+            fetch('/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.text())
+                .then(msg => alert(msg))
+                .catch(err => alert('Error: ' + err));
+        });
+    </script>
 </body>
+
 </html>

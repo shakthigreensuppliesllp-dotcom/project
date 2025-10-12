@@ -316,6 +316,10 @@
             cursor: pointer;
         }
 
+        .ebill-alert {
+            color: #FF0000;
+        }
+
         @media print {
             body {
                 margin: 0;
@@ -338,15 +342,17 @@
 </head>
 
 <body>
+    <!-- <form id="invoiceDataForm"> -->
     <div class="input-section">
         <h3>Enter Invoice Details</h3>
         <label>Bill No.:</label>
         <input type="text" id="billNo" value="WGL/SGSL/A-0328">
+
         <label>Bill Date:</label>
+        <input type="text" id="billDate" placeholder="DD/MM/YYYY">
 
         <!-- <input type="text" id="billDate" value="10/01/2025"> -->
         <!-- Date input field -->
-        <input type="text" id="billDate" placeholder="DD/MM/YYYY">
 
         <div class="form-group">
             <label for="modeOfTransport">Mode Of Transport:</label>
@@ -391,12 +397,18 @@
         <input type="text" id="totalAfterTax" value=""> -->
         <label>Total Amount in Words:</label>
         <input type="text" id="totalInWords" value="">
-        <button onclick="updateInvoice()">Update Invoice</button>
-        <button onclick="downloadPDF()">Download PDF</button>
         <!-- <button onclick="downloadWord()">Download Word</button> -->
     </div>
+    <!-- </form> -->
     <div>
-        <p id="eBillAlert"></p>
+        <h3 id="eBillAlert" class="ebill-alert"></h3>
+        <a href="https://ewaybillgst.gov.in/login.aspx" target="_blank" id="eBillSystem"></a>
+        <br><br>
+        <div class="">
+            <button onclick="updateInvoice()">Update Invoice</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+        </div>
+        <br><br>
     </div>
     <div class="invoice-container" id="invoice">
         <div class="invoice-outline">
@@ -778,8 +790,12 @@
 
                 // 🚨 Check for E-Way Bill requirement
                 if (parseInt(product.replace(".00", "")) > 50000) {
-                    const eBillAlert = "Amount is above 50,000 Rupees. Create E-Way Bill and submit Invoice";
+                    const eBillAlert = "Amount is above 50,000 Rupees. Create E-Way Bill and submit Invoice <br> https://ewaybillgst.gov.in/login.aspx";
                     document.getElementById("eBillAlert").textContent = eBillAlert;
+                    document.getElementById("eBillSystem").textContent = "Click Here to Generate E-Way Bill";
+                } else {
+                    document.getElementById("eBillAlert").textContent = "E-Way Bill NOT Required(Amount < Rs.50,000)";
+                    document.getElementById("eBillSystem").textContent = "";
                 }
             } else {
                 document.getElementById('total').value = "Invalid input";
