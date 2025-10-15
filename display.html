@@ -38,7 +38,7 @@
       <ul class="nav navbar-nav">
         <li><a href="home.html">Home</a></li>
         <!-- <li><a href="create.html">Create Invoice</a></li> -->
-        <li><a>Invoice Data</a></li>
+        <!-- <li><a>Invoice Data</a></li> -->
         <!-- <li><a href="driver.html">Driver Details</a></li> -->
         <li><a href="index.html" onclick="logout()">Logout</a></li>
       </ul>
@@ -97,11 +97,11 @@
               }
 
               if (
-                header.includes('bill') ||
-                header.includes('amount') ||
-                header.includes('profit') ||
-                header.includes('total') ||
-                header.includes('qty')
+                header.includes('total (rs.):') ||
+                header.includes('profits(rs.)') ||
+                header.includes('returns(rs.)') ||
+                header.includes('rnvestment(rs.)') ||
+                header.includes('net qty (in mt)')
               ) {
                 // Format numeric amount fields to 2 decimal places
                 cell = parseFloat(cell).toFixed(2);

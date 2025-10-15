@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Dynamic Invoice</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- Include Flatpickr CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            color: #000000;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        .row {
+            margin: 0px;
+        }
+
+        .red {
+            color: #FF0000;
+        }
+
+        .col-md-6 {
+            padding: 0px;
+        }
+
+        .pd-top5 {
+            padding-top: 5px;
+        }
+
+        p {
+            font-size: 12px;
+            margin: 4px;
+            color: #000;
+        }
+
+        .float-left {
+            float: left;
+        }
+
+        hr {
+            margin: 2px 3px 3px 3px;
+            border-top: 1px solid #000;
+        }
+
+        .pad-4px {
+            padding-bottom: 4px;
+        }
+
+        .clear-both {
+            clear: both;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #000000;
+        }
+
+        .border-left {
+            border-left: 1px solid #000000;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .supply-delivery {
+            height: 230px;
+        }
+
+        .supplier-details,
+        .delivery-details {
+            height: 230px;
+        }
+
+        .supplier-details h5,
+        .delivery-details h5 {
+            margin: 0px;
+            font-weight: bold;
+            padding-left: 4px;
+            font-size: 12px;
+        }
+
+        .supplier-details hr,
+        .delivery-details hr {
+            width: 100px;
+        }
+
+        .bill-ship {
+            height: 124px;
+        }
+
+        .bill-to,
+        .ship-to {
+            padding-top: 5px;
+            height: 124px;
+        }
+
+        .bill-to h5,
+        .ship-to h5 {
+            margin: 0px;
+            font-weight: bold;
+            padding-left: 4px;
+            font-size: 12px;
+        }
+
+        .bill-to hr,
+        .ship-to hr {
+            width: 50px;
+            margin: 2px 3px 3px 4px;
+            border: 0;
+            border-top: 1px solid #000;
+        }
+
+        .transport-details {
+            padding-left: 0px;
+        }
+
+        .transport-details h6 {
+            font-weight: bold;
+            margin-bottom: 0px;
+            margin-left: 3px;
+        }
+
+        .transport-details hr {
+            width: 99px;
+            margin: 2px 3px 3px 4px;
+            border: 0;
+            border-top: 1px solid #000;
+        }
+
+        .bill-underline {
+            font-weight: bold;
+            margin: 3px 0px 0px 0px;
+        }
+
+        .bill-hr {
+            width: 100px;
+            margin: auto;
+        }
+
+        .Company-title {
+            font-weight: bold;
+            margin: 0px;
+        }
+
+        .title-hr {
+            width: 320px;
+            margin: auto;
+        }
+
+        .invoice-container {
+            width: 210mm;
+            min-width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 8mm;
+            box-sizing: border-box;
+            font-size: 12pt;
+            margin-bottom: 30px;
+        }
+
+
+        .invoice-outline {
+            border: 1px solid #000000;
+        }
+
+        .header {
+            padding: 2px;
+            text-align: center;
+            margin: 0px;
+            border-bottom: 1px solid #000000;
+        }
+
+        .header h1 {
+            font-size: 18pt;
+            margin: 0;
+        }
+
+        .header p {
+            margin: 5px 0;
+            font-size: 9pt;
+        }
+
+        .details,
+        .transport,
+        .billing {
+            font-size: 9pt;
+            color: #000000;
+        }
+
+        .details .order-details {
+            border-bottom: 1px solid #000000;
+        }
+
+        .details table,
+        .billing table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .details table td,
+        .billing table td {
+            padding: 3px;
+            vertical-align: top;
+        }
+
+        .billing table {
+            border: 1px solid #000000;
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .billing table th,
+        .billing table td {
+            border: 1px solid #000000;
+            border-bottom: none;
+            border-left: none;
+            padding: 4px;
+            font-size: 9pt;
+        }
+
+        .billing table th {
+            text-align: center;
+        }
+
+        .billing table td:last-child,
+        .billing table th:last-child {
+            border-right: none;
+        }
+
+        .billing table tr:last-child {
+            height: 150px;
+        }
+
+        .totals {
+            margin-top: 20px;
+            font-size: 10pt;
+        }
+
+        .totals p {
+            margin: 5px 0;
+        }
+
+        .bank-details h6 {
+            margin: 3px;
+        }
+
+        .bank-details,
+        .signature {
+            margin-top: 2px;
+            font-size: 10pt;
+            padding: 2px;
+        }
+
+        .digi-sign {
+            text-align: center;
+        }
+
+        .bank-details hr {
+            width: 90px;
+        }
+
+        .input-section {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* width: 120mm; */
+            box-sizing: border-box;
+        }
+
+        .input-section label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .input-section input {
+            width: 100%;
+            padding: 5px;
+            font-size: 10pt;
+            border: 1px solid #000000;
+        }
+
+        .input-section button {
+            margin: 10px 5px;
+            padding: 10px 20px;
+            font-size: 10pt;
+            cursor: pointer;
+        }
+
+        .ebill-alert {
+            color: #FF0000;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                background-color: white;
+            }
+
+            .input-section {
+                display: none;
+            }
+
+            .invoice-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .navbar {
+            width: 100%;
+        }
+
+        .pdf-container {
+            height: 400mm;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Shakthi App</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li>
+                <!-- <li><a href="create.html">Create Invoice</a></li> -->
+                <!-- <li><a href="display.html">Invoice Data</a></li> -->
+                <!-- <li><a href="driver.html">Driver Details</a></li> -->
+                <li><a href="index.html" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <button onclick="loadPOData()">Po Data</button>
+    <!-- <form id="invoiceDataForm"> -->
+    <div class="input-section">
+        <h3>Enter Invoice Details</h3>
+        <label>Bill No.:</label>
+        <input type="text" id="billNo" value="WGL/SGSL/A-0328">
+
+        <label>Bill Date:</label>
+        <input type="text" id="billDate" placeholder="DD/MM/YYYY">
+
+        <!-- <input type="text" id="billDate" value="10/01/2025"> -->
+        <!-- Date input field -->
+
+        <div class="form-group">
+            <label for="modeOfTransport">Mode Of Transport:</label>
+            <input list="transportOptions" id="modeOfTransport" class="form-control"
+                placeholder="Select Mode Of Transport" value="">
+            <datalist id="transportOptions">
+                <option value="TRACTOR & TROLLEY">
+                <option value="TRUCK (TIPPER)">
+            </datalist>
+        </div>
+
+        <!-- <label>Vehicle No:</label>
+        <input type="text" id="vehicleNo" value="TN 18 AB 1350"> -->
+        <div class="form-group">
+            <label for="vehicleNo">Vehicle No:</label>
+            <input list="vehicleOptions" id="vehicleNo" class="form-control"
+                placeholder="Select or enter vehicle number" value="">
+            <datalist id="vehicleOptions">
+                <option value="TN 18 AB 1350">
+                <option value="TS 19 T 5677">
+                <option value="TN 18 BL 7767">
+                <option value="TN 18 BK 8749">
+            </datalist>
+        </div>
+
+        <label>Ticket No.:</label>
+        <input type="text" id="rstNo" value="135">
+        <label>Date of Supply:</label>
+        <!-- <input type="text" id="dateOfSupply" value="10/01/2025"> -->
+        <input type="text" id="dateOfSupply" placeholder="DD/MM/YYYY">
+
+        <label>NET QTY (in MT):</label>
+        <input type="text" id="netQty" value="19.39">
+        <button onclick="multiplyNumbers()">Update Amount</button>
+        <label>TOTAL (Rs.):</label>
+        <input type="text" id="total" value="">
+        <label>TOTAL (Rounded Up):</label>
+        <input type="text" id="totalRounded" value="">
+        <!-- <label>Total Amount Before Tax:</label>
+        <input type="text" id="totalBeforeTax" value="">
+        <label>Total Amount After Tax:</label>
+        <input type="text" id="totalAfterTax" value=""> -->
+        <label>Total Amount in Words:</label>
+        <input type="text" id="totalInWords" value="">
+        <!-- <button onclick="downloadWord()">Download Word</button> -->
+    </div>
+    <!-- </form> -->
+    <div>
+        <h3 id="eBillAlert" class="ebill-alert"></h3>
+        <a href="https://ewaybillgst.gov.in/login.aspx" target="_blank" id="eBillSystem"></a>
+        <br><br>
+        <div class="">
+            <button onclick="updateInvoice()">Update Invoice</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+        </div>
+        <br><br>
+    </div>
+    <div class="container-fluid pdf-container">
+        <div class="invoice-scroll-wrapper" style="overflow-x: auto;">
+            <div class="invoice-container" id="invoice">
+                <div class="invoice-outline">
+                    <div class="header">
+                        <h6 class="bill-underline">BILL OF SUPPLY</h6>
+                        <hr class="bill-hr">
+                        <p class="clear-both">Original For Recipients</p>
+                        <h3 class="Company-title">SHAKTHI GREEN SUPPLIES LLP</h3>
+                        <hr class="title-hr">
+                        <div class="clear-both">
+                            <p><strong>Address:</strong> No. 306, 2nd Block, 16-2-752/123/1/7T014, Sumadhura Elegance,
+                                SBH
+                                Colony, Saidabad (Hyderabad), Hyderabad, <br>Hyderabad, Telangana - 500059.</p>
+                            <p><strong>Contact No.:</strong> 8106202799, <strong>Email:</strong>
+                                Pettemnaveen.1hr@gmail.com</p>
+                            <p><strong>RIL VENDOR CODE:</strong> 000-3815957</p>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <table class="order-details">
+                            <tr>
+                                <td><strong>Bill No.:</strong> <span id="billNoDisplay" class="red"></span></td>
+                                <td><strong>Bill Date:</strong> <span id="billDateDisplay" class="red"></span></td>
+                                <td><strong>Purchase Order No.:</strong> 240941989</td>
+                                <td><strong>PO Date:</strong> 21-07-2025</td>
+                            </tr>
+                        </table>
+                        <div class="supply-delivery border-bottom">
+                            <div class="row">
+                                <div class="col-md-6 pd-top5 supplier-details">
+                                    <h5>Details of Supplier</h5>
+                                    <hr class="float-left">
+                                    <div class="clear-both">
+                                        <p class=""><strong>Company Name:</strong> M/S SHAKTHI GREEN SUPPLIES LLP</p>
+                                        <p class="pad-4px"><strong>Address:</strong> Flat No. 306, 2nd Block,
+                                            16-2-752/123/1/7T014, Sumadhura
+                                            Elegance, SBH
+                                            Colony, Saidabad (Hyderabad), Hyderabad, Hyderabad, Telangana - 500059.</p>
+                                        <p class="">
+                                            <span style="margin-right: 30px;"><strong>GSTIN:</strong>
+                                                36AFNFS6281D1ZN</span>
+                                            <span><strong>PAN:</strong> AFNFS6281D</span>
+                                        </p>
+                                        <p class="pad-4px"><strong>State Name & Code:</strong> TELANGANA, 36.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border-left pd-top5 delivery-details">
+                                    <h5>Details of Delivery</h5>
+                                    <hr class="float-left">
+                                    <div class="clear-both">
+                                        <p><strong>Address:</strong> Reliance Industries Limited Survey No: 820/1A,
+                                            1618-1A1,
+                                            1618-1C, 1619,1620,1621,1, Peyyapalem Village, Taluka:Kodavalur Mandal,
+                                            Peyyalapalem, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317.</p>
+                                    </div>
+                                    <div class="transport-details">
+                                        <h6>Transport Details</h6>
+                                        <hr class="float-left">
+                                        <div class="clear-both">
+                                            <p><strong>Transportation Mode:</strong> <span id="modeOfTransportDisplay"
+                                                    class="red">TRUCK (TIPPER)</span>
+                                            </p>
+                                            <p><strong>Vehicle No.:</strong> <span id="vehicleNoDisplay" class="red">TN
+                                                    18 AB
+                                                    1350</span></p>
+                                            <p><strong>Ticket No.:</strong> <span id="rstNoDisplay"
+                                                    class="red">135</span></p>
+                                            <p><strong>Date of Supply:</strong> <span id="dateOfSupplyDisplay"
+                                                    class="red"></span>
+                                            </p>
+                                            <p><strong>Place of Supply:</strong> Gandavaram, Andhra Pradesh.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bill-ship">
+                            <div class="row">
+                                <div class="col-md-6 bill-to">
+                                    <h5>BILL TO</h5>
+                                    <hr class="bill-to-hr">
+                                    <p class="pad-4px"><strong>Address:</strong> Reliance Industries Limited Survey No:
+                                        820/1A,
+                                        1618-1A1,
+                                        1618-1C, 1619,1620,1621,1, Peyyapalem Village, Taluka:Kodavalur Mandal,
+                                        Peyyalapalem, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317.</p>
+                                    <p class="pad-4px">
+                                        <span style="margin-right: 30px;"><strong>GSTIN:</strong> 37AAACR5055K3Z4</span>
+                                        <span><strong>PAN:</strong> AAACR5055K</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6 border-left ship-to">
+                                    <h5>SHIP TO</h5>
+                                    <hr class="ship-to-hr">
+                                    <p class="pad-4px"><strong>Address:</strong> Reliance Industries Limited Survey No:
+                                        820/1A,
+                                        1618-1A1,
+                                        1618-1C, 1619,1620,1621,1, Peyyapalem Village, Taluka:Kodavalur Mandal,
+                                        Peyyalapalem, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317.</p>
+                                    <p class="pad-4px">
+                                        <span style="margin-right: 30px;"><strong>GSTIN:</strong> 37AAACR5055K3Z4</span>
+                                        <span><strong>PAN:</strong> AAACR5055K</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="billing">
+                        <table>
+                            <tr class="text-center">
+                                <th>S No.</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>HSN CODE</th>
+                                <th>NET QTY </br>(in MT)</th>
+                                <th>Rate </br><span style="text-align: center;">(Basic+Freight+Other Charges)</span>
+                                </th>
+                                <th>CGST</th>
+                                <th>SGST</th>
+                                <th>IGST</th>
+                                <th>TOTAL</br>(Rs.)</th>
+                            </tr>
+                            <tr class="text-center">
+                                <td>1</td>
+                                <td>ANIMAL DUNG</td>
+                                <td>31010091</td>
+                                <td><span id="netQtyDisplay" class="red"></span></td>
+                                <td>2160</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-right"><span id="totalDisplay" class="red"></span></td>
+                            </tr>
+                            <tr class="text-right">
+                                <td colspan="8">Round Off</td>
+                                <td>0</td>
+                            </tr>
+                            <tr class="text-right">
+                                <td colspan="8">TOTAL (Rounded Up)</td>
+                                <td><span id="totalRoundedDisplay" class="red"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" rowspan="5" colspan="4"><strong style="font-size: 10pt;">Amount in
+                                        Words
+                                        (Rounded):</strong>
+                                    <p id="totalInWordsDisplay" class="red" style="font-size: 10pt; margin-left: 0px;">
+                                    </p>
+                                </td>
+                                <td colspan="4">Total Amount Before Tax</td>
+                                <td id="totalBeforeTaxDisplay" class="text-right red" colspan="1"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Add: CGST</td>
+                                <td class="text-right" colspan="1">-</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Add: SGST</td>
+                                <td class="text-right" colspan="1">-</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Add: IGST</td>
+                                <td class="text-right" colspan="1">-</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Total Amount After Tax</td>
+                                <td id="totalAfterTaxDisplay" class="text-right red" colspan="1"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><strong>Reverse Charge (YES / NO):</strong> NO</td>
+                                <td class="text-right" colspan="6"><strong>E & O.E.</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="bank-details" colspan="4">
+                                    <div>
+                                        <h6><strong>BANK DETAILS</strong></h6>
+                                        <hr>
+                                        <div class="clear-both">
+                                            <p><strong>Account Holder Name:</strong> M/S SHAKTHI GREEN SUPPLIES LLP</p>
+                                            <p><strong>Current Account Number:</strong> 240911010000057 </p>
+                                            <p><strong>IFSC Code:</strong>UBIN0824097</p>
+                                            <p><strong>Bank Name:</strong> UNION BANK OF INDIA</p>
+                                            <p><strong>Bank Address:</strong> GADDIANNARAM, DILSUKHNAGAR, HYDERABAD -
+                                                500060.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="signature" colspan="5">
+                                    <div class="digi-sign">
+                                        <p style="font-family: 'Times New Roman', Times, serif;"><strong>For Company
+                                                Name</strong></p>
+                                        <p
+                                            style="font-family: 'Times New Roman', Times, serif; font-style: italic; font-size: 12pt;">
+                                            <strong>Digital Signature</strong>
+                                        </p>
+                                        <p
+                                            style="font-family: 'Times New Roman', Times, serif; font-style: italic; font-size: 12pt; margin-top: 100px;">
+                                            <strong>Authorised Signatory</strong>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        // When the page loads, populate the inputs
+        // window.onload = function () {
+        //     document.getElementById("billNo").value = invoiceData.BillNo;
+        //     document.getElementById("billDate").value = invoiceData.BillDate;
+        //     document.getElementById("vehicleNo").value = invoiceData.VehicleNo;
+        //     document.getElementById("rstNo").value = invoiceData.TicketNo;
+        //     document.getElementById("dateOfSupply").value = invoiceData.DateOfSupply;
+        //     document.getElementById("netQty").value = invoiceData.NetQtyMT;
+        // };
+
+        const detailsOfVendor = {
+            "BillNo": "WGU/SGS/JA-0831",
+            "BillDate": "08/10/2025",
+            "PurchaseOrderNo": "249041989",
+            "PODate": "21/07/2025",
+            "SupplierDetails": {
+                "CompanyName": "MS SHAKTHI GREEN SUPPLIES LLP",
+                "Address": "Flat No. 306, 2nd Block, 16-2-153/1/17014, Surdhama Elegance, SBH Colony, Saidabad (Hyderabad), Hyderabad, Telangana - 500059",
+                "GSTIN": "36AFNFS281D1ZN",
+                "PAN": "AFNFS281D1",
+                "StateNameCode": "TELANGANA, 36"
+            },
+            "DeliveryDetails": {
+                "Address": "Reliance Industries Limited, Survey No: 820/1A, 816-1A1, 816-1B, 816-1C, 816-1C1, Peyyapallem Village, Taluka: Kodavur Mandal, District: Nellore, Andhra Pradesh - 524317"
+            },
+            "TransportDetails": {
+                "ModeOfTransport": "TRACTOR & TROLLEY",
+                "VehicleNo": "TS 21 AP 1993",
+                "TicketNo": "175",
+                "DateOfSupply": "08/10/2025",
+                "PlaceOfSupply": "Gandavaram, Andhra Pradesh"
+            }
+        }
+
+        const BankDetails = {
+            "AccountHolderName": "M/S SHAKTHI GREEN SUPPLIES LLP",
+            "AccountType": "Current",
+            "AccountNumber": "240911010000057",
+            "IFSCCode": "UBIN0824097",
+            "BankName": "UNION BANK OF INDIA",
+            "BankAddress": "GADDIANNARAM, DILSUKHNAGAR, HYDERABAD - 500060"
+        }
+
+        const VendorDetails = {
+            "DocumentTitle": "BILL OF SUPPLY",
+            "RecipientCopy": true,
+            "CompanyName": "SHAKTHI GREEN SUPPLIES LLP",
+            "Address": "No. 306, 2nd Block, 16-2-753/121/1/7014, Sumadhura Elegance, SBH Colony, Saidabad (Hyderabad), Hyderabad, Telangana - 500059",
+            "ContactNo": "8106027929",
+            "Email": "Patternmareen.lnd@gmail.com",
+            "RILVendorCode": "001-3815957"
+        }
+
+        const BillTo = {
+            "CompanyName": "Reliance Industries Limited",
+            "Address": "Survey No: 820/1A, 1618-1A1, 1618-1C, 1619/1&2, 1621/1, Peryapalem Village, Taluka: Kodavaluru Mandal, Peryapalam, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317",
+            "GSTIN": "37AAACR5055K3Z4",
+            "PAN": "AAACR5055K"
+        }
+
+        const ShipTo = {
+            "CompanyName": "Reliance Industries Limited",
+            "Address": "Survey No: 820/1A, 1618-1A1, 1618-1C, 1619/1&2, 1621/1, Peryapalem Village, Taluka: Kodavaluru Mandal, Peryapalam, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317",
+            "GSTIN": "37AAACR5055K3Z4",
+            "PAN": "AAACR5055K"
+        }
+
+        const InvoiceTable = {
+            "Items": [
+                {
+                    "SNo": 1,
+                    "Description": "ANIMAL DUNG",
+                    "HSNCode": "31010091",
+                    "NetQtyMT": 30.23,
+                    "Rate": 2160,
+                    "CGST": 0,
+                    "SGST": 0,
+                    "IGST": 0,
+                    "TotalRs": 65296.80
+                }
+            ],
+            "RoundOff": 0,
+            "TotalRounded": 65296.00,
+            "AmountInWords": "SIXTY-FIVE THOUSAND TWO HUNDRED NINETY-SIX RUPEES ONLY",
+            "TotalAmountBeforeTax": 65296.00,
+            "AddCGST": 0,
+            "AddSGST": 0,
+            "AddIGST": 0,
+            "TotalAmountAfterTax": 65296.00,
+            "ReverseCharge": "NO",
+            "EOE": true
+        }
+
+        function updateInvoice() {
+            document.getElementById('billNoDisplay').textContent = document.getElementById('billNo').value;
+            document.getElementById('billDateDisplay').textContent = document.getElementById('billDate').value;
+            document.getElementById('modeOfTransportDisplay').textContent = document.getElementById('modeOfTransport').value;
+            document.getElementById('vehicleNoDisplay').textContent = document.getElementById('vehicleNo').value;
+            document.getElementById('rstNoDisplay').textContent = document.getElementById('rstNo').value;
+            document.getElementById('dateOfSupplyDisplay').textContent = document.getElementById('dateOfSupply').value;
+            document.getElementById('netQtyDisplay').textContent = document.getElementById('netQty').value;
+            document.getElementById('totalDisplay').textContent = document.getElementById('total').value;
+            document.getElementById('totalRoundedDisplay').textContent = document.getElementById('totalRounded').value;
+            document.getElementById('totalBeforeTaxDisplay').textContent = document.getElementById('totalRounded').value;
+            document.getElementById('totalAfterTaxDisplay').textContent = document.getElementById('totalRounded').value;
+            // document.getElementById('totalBeforeTaxDisplay').textContent = document.getElementById('totalBeforeTax').value;
+            // document.getElementById('totalAfterTaxDisplay').textContent = document.getElementById('totalAfterTax').value;
+            document.getElementById('totalInWordsDisplay').textContent = document.getElementById('totalInWords').value;
+        }
+
+        function downloadPDF() {
+            const invoice = document.getElementById('invoice');
+
+            // Temporarily scale for desktop width
+            invoice.style.width = '210mm';
+            invoice.style.zoom = '1';
+
+            html2canvas(invoice, { scale: 2 }).then(canvas => {
+                const { jsPDF } = window.jspdf;
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('invoice.pdf');
+
+                // Reset zoom after download
+                invoice.style.zoom = '';
+            });
+        }
+
+        function downloadWord() {
+            const invoiceContent = document.getElementById('invoice').innerHTML;
+            const blob = new Blob(['<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' +
+                document.querySelector('style').innerText +
+                '</style></head><body>' + invoiceContent + '</body></html>'],
+                { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'invoice.doc';
+            link.click();
+        }
+
+        function multiplyNumbers() {
+            const num1 = parseFloat(document.getElementById('netQty').value);
+            const num2 = 2160;
+
+            // Check if the inputs are valid numbers
+            if (!isNaN(num1) && !isNaN(num2)) {
+                const result = (num1 * num2).toFixed(2);
+                const product = Math.trunc(num1 * num2) + ".00";
+
+                document.getElementById('total').value = result;
+                document.getElementById('totalRounded').value = product;
+                // document.getElementById('totalBeforeTax').value = product;
+                // document.getElementById('totalAfterTax').value = product;
+
+                function convertToWords(num) {
+                    const a = [
+                        '', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN',
+                        'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'SEVENTEEN', 'EIGHTEEN', 'NINETEEN'
+                    ];
+                    const b = ['', '', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'SIXTY', 'SEVENTY', 'EIGHTY', 'NINETY'];
+
+                    function numToWords(n) {
+                        if (n < 20) return a[n];
+                        if (n < 100) return b[Math.floor(n / 10)] + (n % 10 ? '-' + a[n % 10] : '');
+                        if (n < 1000) return a[Math.floor(n / 100)] + ' HUNDRED' + (n % 100 ? ' ' + numToWords(n % 100) : '');
+                        if (n < 100000) return numToWords(Math.floor(n / 1000)) + ' THOUSAND' + (n % 1000 ? ' ' + numToWords(n % 1000) : '');
+                        return '';
+                    }
+
+                    return numToWords(num) + ' RUPEES ONLY';
+                }
+                document.getElementById('totalInWords').value = convertToWords(Math.trunc(num1 * num2))
+                console.log(convertToWords(Math.trunc(num1 * num2)));
+
+                // 🚨 Check for E-Way Bill requirement
+                if (parseInt(product.replace(".00", "")) > 50000) {
+                    const eBillAlert = "Amount is above 50,000 Rupees. Create E-Way Bill and submit Invoice <br> https://ewaybillgst.gov.in/login.aspx";
+                    document.getElementById("eBillAlert").textContent = eBillAlert;
+                    document.getElementById("eBillSystem").textContent = "Click Here to Generate E-Way Bill";
+                } else {
+                    document.getElementById("eBillAlert").textContent = "E-Way Bill NOT Required(Amount < Rs.50,000)";
+                    document.getElementById("eBillSystem").textContent = "";
+                }
+            } else {
+                document.getElementById('total').value = "Invalid input";
+            }
+        }
+
+        flatpickr("#billDate", {
+            dateFormat: "d/m/Y", // dd/mm/yyyy format
+            allowInput: true
+        });
+
+        flatpickr("#dateOfSupply", {
+            dateFormat: "d/m/Y", // dd/mm/yyyy format
+            allowInput: true
+        });
+
+        function loadPOData() {
+            fetch('/po_data.json')
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Data:", data)
+                })
+        }
+    </script>
+</body>
+
+</html>

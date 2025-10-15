@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
+
 <body>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand">Shakthi App</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Shakthi App</a>
       </div>
-      <ul class="nav navbar-nav">
-          <li><a>Home</a></li>
-        <!-- <li><a href="create.html">Create Invoice</a></li> -->
-        <li><a href="display.html">Invoice Data</a></li>
-        <!-- <li><a href="driver.html">Driver Details</a></li> -->
-        <li><a href="index.html" onclick="logout()">Logout</a></li>
-      </ul>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Select Invoice <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="nelloreCowDungInvoice.html">Nellore - Cow Dung</a></li>
+              <li><a href="warangalPaddyBalesInvoice.html">Warangal - Paddy Bales</a></li>
+              <li><a href="kurnoolCowDungInvoice">Kurnool - Cow Dung</a></li>
+              <li><a href="warangalCowDungInvoice.html">Warangal - Cow Dung</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Page 2</a></li>
+          <li><a href="#">Page 3</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
   <div class="container">
-    <h2>Welcome to the Home Page</h2>
+    <a href="display.html"><button>Invoice Data</button></a>
+    <br><br>
+    <a href="create.html"><button>Nellore Cow Dung</button></a>
+    <br><br>
+    <a href="driver.html"><button>Driver Data</button></a>
   </div>
 
   <script>
@@ -33,4 +58,5 @@
     }
   </script>
 </body>
+
 </html>
