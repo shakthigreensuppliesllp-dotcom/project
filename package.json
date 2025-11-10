@@ -1,0 +1,18 @@
+{
+  "name": "googledatabase",
+  "version": "1.0.0",
+  "description": "This app lets you register vehicle data and store it in Google Sheets. Built with Node.js, Express, and Bootstrap.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "googleapis": "^164.1.0"
+  }
+}
