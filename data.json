@@ -1,0 +1,47 @@
+[
+  {
+    "billNo": "WGL/SGSL/A-0333",
+    "billDate": "13/10/2025",
+    "transporterName": "Kasi",
+    "modeOfTransport": "TRUCK (TIPPER)",
+    "vehicleNo": "TN 18 AB 1350",
+    "ticketNo": "209",
+    "eWayBillNo": "0",
+    "dateOfSupply": "12/10/2025",
+    "netQty": "25.66",
+    "total": "55425.60",
+    "totalRounded": "55425.00",
+    "totalInWords": "FIFTY-FIVE THOUSAND FOUR HUNDRED TWENTY-FIVE RUPEES ONLY",
+    "invoiceStatus": "Not Submitted"
+  },
+  {
+    "billNo": "WGL/SGSL/A-0555",
+    "billDate": "13/10/2025",
+    "transporterName": "Kasi",
+    "modeOfTransport": "TRUCK (TIPPER)",
+    "vehicleNo": "TN 18 AB 1350",
+    "ticketNo": "209",
+    "eWayBillNo": "0",
+    "dateOfSupply": "12/10/2025",
+    "netQty": "25.66",
+    "total": "55425.60",
+    "totalRounded": "55425.00",
+    "totalInWords": "FIFTY-FIVE THOUSAND FOUR HUNDRED TWENTY-FIVE RUPEES ONLY",
+    "invoiceStatus": "Not Submitted"
+  },
+  {
+    "billNo": "WGL/SGSL/A-0999",
+    "billDate": "13/10/2025",
+    "transporterName": "Kasi",
+    "modeOfTransport": "TRUCK (TIPPER)",
+    "vehicleNo": "TN 18 AB 1350",
+    "ticketNo": "209",
+    "eWayBillNo": "0",
+    "dateOfSupply": "12/10/2025",
+    "netQty": "25.66",
+    "total": "55425.60",
+    "totalRounded": "55425.00",
+    "totalInWords": "FIFTY-FIVE THOUSAND FOUR HUNDRED TWENTY-FIVE RUPEES ONLY",
+    "invoiceStatus": "Not Submitted"
+  }
+]
