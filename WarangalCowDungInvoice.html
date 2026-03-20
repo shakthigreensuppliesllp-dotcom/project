@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <title>Dynamic Invoice</title>
+    <title>Warangal Cow Dung Invoice</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -79,21 +79,14 @@
                     </div>
                 </div>
             </nav>
-            <div class="container">
-                <a href="display.html"><button>Invoice Data</button></a>
-                <br><br>
-                <a href="create.html"><button>Nellore Cow Dung</button></a>
-                <br><br>
-                <a href="driver.html"><button>Driver Data</button></a>
-            </div>
+            <h2 class="container">Warangal Cow Dung S1</h2>
         </div>
 
-        <button onclick="loadPOData()">Po Data</button>
         <!-- <form id="invoiceDataForm"> -->
         <div class="input-section">
             <h3>Enter Invoice Details</h3>
             <label>Bill No.:</label>
-            <input type="text" id="billNo" value="WGL/SGSL/A-0426">
+            <input type="text" id="billNo" value="WGL/SGSL/A-0">
 
             <label>Bill Date:</label>
             <input type="text" id="billDate" placeholder="DD/MM/YYYY">
@@ -106,7 +99,6 @@
                 <input list="transportOptions" id="modeOfTransport" class="form-control"
                     placeholder="Select Mode Of Transport" value="">
                 <datalist id="transportOptions">
-                    <option value="TRACTOR & TROLLEY">
                     <option value="TRUCK (TIPPER)">
                 </datalist>
             </div>
@@ -118,33 +110,29 @@
                 <input list="vehicleOptions" id="vehicleNo" class="form-control"
                     placeholder="Select or enter vehicle number" value="">
                 <datalist id="vehicleOptions">
-                    <option value="TN 18 AB 1350">
-                    <option value="TS 19 T 5677">
-                    <option value="TN 18 BL 7767">
-                    <option value="TN 18 BK 8749">
+                    <option value="TS 28 T 1589"></option>
+                    <option value="TS 28 T 1699"></option>
+                    <option value="TS 21 T 2254"></option>
+                    <option value="TS 19 T 5677"></option>
+                    <option value="TS 22 T 2234"></option>
+                    <option value="TS 21 T 2245"></option>
                 </datalist>
             </div>
 
             <label>Ticket No.:</label>
-            <input type="text" id="rstNo" value="135">
+            <input type="text" id="rstNo" value="">
             <label>Date of Supply:</label>
-            <!-- <input type="text" id="dateOfSupply" value="10/01/2025"> -->
             <input type="text" id="dateOfSupply" placeholder="DD/MM/YYYY">
 
             <label>NET QTY (in MT):</label>
-            <input type="text" id="netQty" value="19.39">
+            <input type="text" id="netQty" value="">
             <button onclick="multiplyNumbers()">Update Amount</button>
             <label>TOTAL (Rs.):</label>
             <input type="text" id="total" value="">
             <label>TOTAL (Rounded Up):</label>
             <input type="text" id="totalRounded" value="">
-            <!-- <label>Total Amount Before Tax:</label>
-        <input type="text" id="totalBeforeTax" value="">
-        <label>Total Amount After Tax:</label>
-        <input type="text" id="totalAfterTax" value=""> -->
             <label>Total Amount in Words:</label>
             <input type="text" id="totalInWords" value="">
-            <!-- <button onclick="downloadWord()">Download Word</button> -->
         </div>
         <!-- </form> -->
         <div>
@@ -182,8 +170,8 @@
                                 <tr>
                                     <td><strong>Bill No.:</strong> <span id="billNoDisplay" class="red"></span></td>
                                     <td><strong>Bill Date:</strong> <span id="billDateDisplay" class="red"></span></td>
-                                    <td><strong>Purchase Order No.:</strong> 240941989</td>
-                                    <td><strong>PO Date:</strong> 21-07-2025</td>
+                                    <td><strong>Purchase Order No.:</strong> 240961274</td>
+                                    <td><strong>PO Date:</strong> 02-09-2025</td>
                                 </tr>
                             </table>
                             <div class="supply-delivery border-bottom">
@@ -211,10 +199,9 @@
                                         <h5>Details of Delivery</h5>
                                         <hr class="float-left">
                                         <div class="clear-both">
-                                            <p><strong>Address:</strong> Reliance Industries Limited Survey No: 820/1A,
-                                                1618-1A1,
-                                                1618-1C, 1619,1620,1621,1, Peyyapalem Village, Taluka:Kodavalur Mandal,
-                                                Peyyalapalem, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317.</p>
+                                            <p><strong>Address:</strong> Reliance Industries Limited, Survey No. 641/A1,
+                                                641/A2, 641/B1, 644/A1, 644/A2, 644/B1, 644/B2, 644/C, Part, 641/B2,
+                                                642, 643, 1, Suraram, Hanamkonda, Telangana – 505476.</p>
                                         </div>
                                         <div class="transport-details">
                                             <h6>Transport Details</h6>
@@ -224,15 +211,13 @@
                                                         id="modeOfTransportDisplay" class="red">TRUCK (TIPPER)</span>
                                                 </p>
                                                 <p><strong>Vehicle No.:</strong> <span id="vehicleNoDisplay"
-                                                        class="red">TN
-                                                        18 AB
-                                                        1350</span></p>
+                                                        class="red"></span></p>
                                                 <p><strong>Ticket No.:</strong> <span id="rstNoDisplay"
-                                                        class="red">135</span></p>
+                                                        class="red"></span></p>
                                                 <p><strong>Date of Supply:</strong> <span id="dateOfSupplyDisplay"
                                                         class="red"></span>
                                                 </p>
-                                                <p><strong>Place of Supply:</strong> Gandavaram, Andhra Pradesh.</p>
+                                                <p><strong>Place of Supply:</strong> Suraram, Hanamkonda.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -243,30 +228,24 @@
                                     <div class="col-md-6 bill-to">
                                         <h5>BILL TO</h5>
                                         <hr class="bill-to-hr">
-                                        <p class="pad-4px"><strong>Address:</strong> Reliance Industries Limited Survey
-                                            No:
-                                            820/1A,
-                                            1618-1A1,
-                                            1618-1C, 1619,1620,1621,1, Peyyapalem Village, Taluka:Kodavalur Mandal,
-                                            Peyyalapalem, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317.</p>
+                                        <p class="pad-4px"><strong>Address:</strong> Reliance Industries Limited, Survey
+                                            No. 641/A1, 641/A2, 641/B1, 644/A1, 644/A2, 644/B1, 644/B2, 644/C, Part,
+                                            641/B2, 642, 643, 1, Suraram, Hanamkonda, Telangana – 505476.</p>
                                         <p class="pad-4px">
                                             <span style="margin-right: 30px;"><strong>GSTIN:</strong>
-                                                37AAACR5055K3Z4</span>
+                                                36AAACR5055K2Z7</span>
                                             <span><strong>PAN:</strong> AAACR5055K</span>
                                         </p>
                                     </div>
                                     <div class="col-md-6 border-left ship-to">
                                         <h5>SHIP TO</h5>
                                         <hr class="ship-to-hr">
-                                        <p class="pad-4px"><strong>Address:</strong> Reliance Industries Limited Survey
-                                            No:
-                                            820/1A,
-                                            1618-1A1,
-                                            1618-1C, 1619,1620,1621,1, Peyyapalem Village, Taluka:Kodavalur Mandal,
-                                            Peyyalapalem, Sri Potti Sriramulu Nellore, Andhra Pradesh - 524317.</p>
+                                        <p class="pad-4px"><strong>Address:</strong> Reliance Industries Limited, Survey
+                                            No. 641/A1, 641/A2, 641/B1, 644/A1, 644/A2, 644/B1, 644/B2, 644/C, Part,
+                                            641/B2, 642, 643, 1, Suraram, Hanamkonda, Telangana – 505476.</p>
                                         <p class="pad-4px">
                                             <span style="margin-right: 30px;"><strong>GSTIN:</strong>
-                                                37AAACR5055K3Z4</span>
+                                                36AAACR5055K2Z7</span>
                                             <span><strong>PAN:</strong> AAACR5055K</span>
                                         </p>
                                     </div>
@@ -293,7 +272,7 @@
                                     <td>ANIMAL DUNG</td>
                                     <td>31010091</td>
                                     <td><span id="netQtyDisplay" class="red"></span></td>
-                                    <td>2160</td>
+                                    <td>2070</td>
                                     <td>0</td>
                                     <td>0</td>
                                     <td>0</td>
@@ -379,7 +358,7 @@
             </div>
         </div>
     </div>
-    <script src="./scripts/invoiceScript.js"></script>
+    <script src="./scripts/wglCowDungScript.js"></script>
 </body>
 
 </html>

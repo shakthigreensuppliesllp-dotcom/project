@@ -1,45 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Login</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-  <div class="container" style="max-width:400px;margin-top:100px;">
-    <h3>Login</h3>
-    <form onsubmit="login(event)">
-      <div class="form-group">
-        <label>Username:</label>
-        <input type="text" id="username" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input type="password" id="password" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-      <div id="error" style="color:red;margin-top:10px;"></div>
-    </form>
+
+<body style="font-family: 'Segoe UI', Arial, sans-serif; text-align: center;">
+
+  <!-- Header -->
+  <header style="font-size: 42px;
+                 font-weight: bold;
+                 background: linear-gradient(90deg, #4facfe, #00f2fe);
+                 -webkit-background-clip: text;
+                 -webkit-text-fill-color: transparent;
+                 margin: 40px 0;
+                 letter-spacing: 2px;
+                 text-shadow: 2px 2px 6px rgba(0,0,0,0.2);">
+    Welcome to Shakthi Green Supplies LLP
+  </header>
+
+  <!-- Buttons -->
+  <div>
+    <a href="kurnoolCowDungInvoice.html">
+      <button style="background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+                     border: none;
+                     color: white;
+                     width: 300px;
+                     padding: 12px 24px;
+                     border-radius: 8px;
+                     font-size: 16px;
+                     cursor: pointer;
+                     box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+        <b>Kurnool Cow Dung Invoice <br> PO 01: 240929498</b>
+      </button>
+    </a>
+    <br><br>
+
+    <a href="WarangalCowDungInvoice.html">
+      <button style="background: linear-gradient(45deg, #a18cd1, #fbc2eb);
+                     border: none;
+                     color: white;
+                     width: 300px;
+                     padding: 12px 24px;
+                     border-radius: 8px;
+                     font-size: 16px;
+                     cursor: pointer;
+                     box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+        <b>Warangal Cow Dung Invoice <br> PO 01: 240961274</b>
+      </button>
+    </a>
+    <br><br>
+
+    <a href="VijayawadaCowDungInvoice.html">
+      <button style="background: linear-gradient(45deg, #fbc2eb, #a6c1ee);
+                     border: none;
+                     color: white;
+                     width: 300px;
+                     padding: 12px 24px;
+                     border-radius: 8px;
+                     font-size: 16px;
+                     cursor: pointer;
+                     box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+        <b>Vijayawada Cow Dung Invoice <br> PO 01: 241011400</b>
+      </button>
+    </a>
   </div>
 
-  <script>
-    const users = [
-      { username: "shakthi", password: "123" },
-      { username: "admin", password: "123" }
-    ];
-
-    function login(e) {
-      e.preventDefault();
-      const u = document.getElementById('username').value.trim();
-      const p = document.getElementById('password').value.trim();
-      const match = users.find(user => user.username === u && user.password === p);
-
-      if (match) {
-        localStorage.setItem('loggedIn', 'true');
-        window.location.href = 'home.html';
-      } else {
-        document.getElementById('error').textContent = 'Invalid credentials';
-      }
-    }
-  </script>
 </body>
+
 </html>
